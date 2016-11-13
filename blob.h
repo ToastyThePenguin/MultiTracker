@@ -13,21 +13,18 @@ public:
 	// member variables ///////////////////////////////////////////////////////////////////////////
 	std::vector<cv::Point> currentContour;
 
-	cv::Rect currentBoundingRect;
+	cv::Rect boundingRect;
 
 	cv::Point centerPosition;
 
-	double dblCurrentDiagonalSize;
-	double dblCurrentAspectRatio;
+	double diagonalSize;
+	double aspectRatio;
 
-	bool blnCurrentMatchFoundOrNewBlob;
-
+	
 	bool matched;
 
-	int intNumOfConsecutiveFramesWithoutAMatch;
-
-	cv::Point predictedNextPosition;
-
+	
+	
 	// function prototypes ////////////////////////////////////////////////////////////////////////
 	Blob(std::vector<cv::Point> _contour);
 

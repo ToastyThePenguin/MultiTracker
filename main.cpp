@@ -219,13 +219,13 @@ int main(void)
 		{
 			Blob possibleBlob(convexHull);	//creates a blob object from the current contour
 
-			if (possibleBlob.currentBoundingRect.area() > 400 &&
-				possibleBlob.dblCurrentAspectRatio > 0.5 &&
-				possibleBlob.dblCurrentAspectRatio < 4.0 &&
-				possibleBlob.currentBoundingRect.width > 20 &&
-				possibleBlob.currentBoundingRect.height > 20 &&
-				possibleBlob.dblCurrentDiagonalSize > 30.0 &&
-				(cv::contourArea(possibleBlob.currentContour) / (double)possibleBlob.currentBoundingRect.area()) > 0.5) //minimum qualifying crriteria for targets, this helps eliminate false positives
+			if (possibleBlob.boundingRect.area() > 400 &&
+				possibleBlob.aspectRatio > 0.5 &&
+				possibleBlob.aspectRatio < 4.0 &&
+				possibleBlob.boundingRect.width > 20 &&
+				possibleBlob.boundingRect.height > 20 &&
+				possibleBlob.diagonalSize > 30.0 &&
+				(cv::contourArea(possibleBlob.currentContour) / (double)possibleBlob.boundingRect.area()) > 0.5) //minimum qualifying crriteria for targets, this helps eliminate false positives
 			{
 				currentFrameBlobs.push_back(possibleBlob);	//adds contour to array of current frame blobs if it meets criteria
 
@@ -369,7 +369,7 @@ void drawTrackers(vector<KalmanFilterTracker> &trackers, Mat img, vector<Blob> &
 
 	for (unsigned int i = 0; i < blobs.size(); i++) {
 
-		cv::rectangle(img, blobs[i].currentBoundingRect, SCALAR_PURPLE, 2);
+		cv::rectangle(img, blobs[i].boundingRect, SCALAR_PURPLE, 2);
 	}
 
 
@@ -479,7 +479,7 @@ void matchBlobstoTrackers(vector<Blob> &currentFrameBlobs, vector<KalmanFilterTr
 		//If tracker is close enoughto current blob the two are matched
 		//Tracker measurements are updated with blob attributes
 		//Next posiiton is then predicted
-		if (dblLeastDistance<blob.dblCurrentDiagonalSize*2.0) 
+		if (dblLeastDistance<blob.diagonalSize*2.0) 
 		{
 			trackers[intIndexOfLeastDistance].matched = true;
 			trackers[intIndexOfLeastDistance].unmatchedFrames = 0;
